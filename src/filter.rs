@@ -30,7 +30,7 @@ impl<I, T: Fn(&I) -> bool> Filter<I> for T {
     }
 }
 
-/// The filter trai
+/// The filter trait
 pub trait Filter<N> {
 
     /// The function which is used to filter something

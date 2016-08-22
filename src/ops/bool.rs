@@ -3,6 +3,7 @@
 //! Will be automatically included when incluing `filter::Filter`, so importing this module
 //! shouldn't be necessary.
 //!
+#[cfg(not(feature = "unstable-filter-as-fn"))]
 use filter::Filter;
 
 #[must_use = "filters are lazy and do nothing unless consumed"]
@@ -19,6 +20,7 @@ impl Bool {
 
 }
 
+#[cfg(not(feature = "unstable-filter-as-fn"))]
 impl<I> Filter<I> for Bool {
 
     fn filter(&self, _: &I) -> bool {
@@ -35,3 +37,36 @@ impl From<bool> for Bool {
 
 }
 
+#[cfg(feature = "unstable-filter-as-fn")]
+impl<'a, I> FnOnce<(&'a I,)> for Bool {
+    type Output = bool;
+    extern "rust-call" fn call_once(self, (arg,): (&'a I,)) -> Self::Output
+    {
+        (self)(arg)
+    }
+}
+
+
+#[cfg(feature = "unstable-filter-as-fn")]
+impl<'a, I> FnMut<(&'a I,)> for Bool {
+    extern "rust-call" fn call_mut(&mut self, (arg,): (&'a I,)) -> Self::Output
+    {
+        (self)(arg)
+    }
+}
+
+#[cfg(feature = "unstable-filter-as-fn")]
+impl<'a, I> Fn<(&'a I,)> for Bool {
+    extern "rust-call" fn call(&self, (_,): (&'a I,)) -> Self::Output
+    {
+        self.b
+    }
+}
+
+#[cfg(feature="unstable-filter-as-fn")]
+#[test]
+fn fn_bool() {
+    use filter::Filter;
+    let b = Bool::new(true);
+    assert_eq!(b.filter(&3), b(&27));
+}

@@ -1,3 +1,5 @@
+#![cfg_attr(feature = "unstable-filter-as-fn", feature(unboxed_closures))]
+#![cfg_attr(feature = "unstable-filter-as-fn", feature(fn_traits))]
 //! A library for constructing predicates and filters for `Iterator::filter`
 //!
 //! This library offers types and traits for creating filters and combining them with logical
@@ -69,4 +71,3 @@
 
 pub mod filter;
 pub mod ops;
-
