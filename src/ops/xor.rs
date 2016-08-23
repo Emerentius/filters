@@ -35,7 +35,7 @@ impl<'a, T, U, I> FnOnce<(&'a I,)> for XOr<T, U>
           U: Filter<I>,
 {
     type Output = bool;
-    extern "rust-call" fn call_once(self, (arg,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call_once(self, (arg,): (&I,)) -> Self::Output
     {
         (self)(arg)
     }
@@ -46,7 +46,7 @@ impl<'a, T, U, I> FnMut<(&'a I,)> for XOr<T, U>
     where T: Filter<I>,
           U: Filter<I>,
 {
-    extern "rust-call" fn call_mut(&mut self, (arg,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call_mut(&mut self, (arg,): (&I,)) -> Self::Output
     {
         (self)(arg)
     }
@@ -57,7 +57,7 @@ impl<'a, T, U, I> Fn<(&'a I,)> for XOr<T, U>
     where T: Filter<I>,
           U: Filter<I>,
 {
-    extern "rust-call" fn call(&self, (arg,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call(&self, (arg,): (&I,)) -> Self::Output
     {
         self.a.filter(arg) ^ self.b.filter(arg)
     }

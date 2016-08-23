@@ -40,7 +40,7 @@ impl From<bool> for Bool {
 #[cfg(feature = "unstable-filter-as-fn")]
 impl<'a, I> FnOnce<(&'a I,)> for Bool {
     type Output = bool;
-    extern "rust-call" fn call_once(self, (arg,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call_once(self, (arg,): (&I,)) -> Self::Output
     {
         (self)(arg)
     }
@@ -49,7 +49,7 @@ impl<'a, I> FnOnce<(&'a I,)> for Bool {
 
 #[cfg(feature = "unstable-filter-as-fn")]
 impl<'a, I> FnMut<(&'a I,)> for Bool {
-    extern "rust-call" fn call_mut(&mut self, (arg,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call_mut(&mut self, (arg,): (&I,)) -> Self::Output
     {
         (self)(arg)
     }
@@ -57,7 +57,7 @@ impl<'a, I> FnMut<(&'a I,)> for Bool {
 
 #[cfg(feature = "unstable-filter-as-fn")]
 impl<'a, I> Fn<(&'a I,)> for Bool {
-    extern "rust-call" fn call(&self, (_,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call(&self, (_,): (&I,)) -> Self::Output
     {
         self.b
     }

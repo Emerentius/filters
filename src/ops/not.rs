@@ -33,7 +33,7 @@ impl<'a, T, I> FnOnce<(&'a I,)> for Not<T>
     where T: Filter<I>,
 {
     type Output = bool;
-    extern "rust-call" fn call_once(self, (arg,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call_once(self, (arg,): (&I,)) -> Self::Output
     {
         (self)(arg)
     }
@@ -43,7 +43,7 @@ impl<'a, T, I> FnOnce<(&'a I,)> for Not<T>
 impl<'a, T, I> FnMut<(&'a I,)> for Not<T>
     where T: Filter<I>,
 {
-    extern "rust-call" fn call_mut(&mut self, (arg,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call_mut(&mut self, (arg,): (&I,)) -> Self::Output
     {
         (self)(arg)
     }
@@ -53,7 +53,7 @@ impl<'a, T, I> FnMut<(&'a I,)> for Not<T>
 impl<'a, T, I> Fn<(&'a I,)> for Not<T>
     where T: Filter<I>,
 {
-    extern "rust-call" fn call(&self, (arg,): (&'a I,)) -> Self::Output
+    extern "rust-call" fn call(&self, (arg,): (&I,)) -> Self::Output
     {
         !self.a.filter(arg)
     }
